@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: My Joke API
+  description: |
+    This is a sample `Joke` server, where you can get random jokes, or search jokes by ID or term.
+    It only contains dad jokes for now, that are coming from a public API.
+    
+    Support:
+  contact:
+    name: Cs Doe
+    email: cs.doe@example.com
+  version: 1.0.0-oas3
+servers:
+  - url: http://localhost:8080/dadjokes
+    description: Local server
+security: [] #No security
+tags:
+  - name: dadjokes
+    externalDocs:
+      description: Originally from icanhazdadjoke API
+      url: https://icanhazdadjoke.com/
+paths:
+  /random:
+    get:
+      tags:
+        - dadjokes
+      summary: Provides with a random joke
+      operationId: getRandom
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JokeDto'
+        '400':
+          description: Invalid status value
+  /{id}:
+    get:
+      tags:
+        - dadjokes
+      summary: Searches a joke by ID
+      operationId: findById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JokeDto'
+        '400':
+          description: Invalid status value
+  /byTerm:
+    get:
+      tags:
+        - dadjokes
+      summary: Searches a joke by term
+      operationId: findByTerm
+      parameters:
+        - in: query
+          name: term
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JokeDto'
+        '400':
+          description: Invalid status value
+components:
+  schemas:
+    JokeDto:
+      type: object
+      properties:
+        joke:
+          type: string
+          example: When my wife told me to stop impersonating a flamingo, I had to put my foot down.
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
