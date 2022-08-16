@@ -1,6 +1,6 @@
-package com.example.myjokeapi.service;
+package com.example.myjokeapi.database.repository;
 
-import com.example.myjokeapi.service.model.Joke;
+import com.example.myjokeapi.database.model.JokeEntity;
 import feign.Param;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MyJokeRepository extends CrudRepository<Joke, String> {
+public interface MyJokeRepository extends CrudRepository<JokeEntity, String> {
     @Override
-    List<Joke> findAll();
+    List<JokeEntity> findAll();
 
     @Query(value = "SELECT * FROM jokes WHERE category = (:category)", nativeQuery = true)
-    List<Joke> findCategory(@Param String category);
+    List<JokeEntity> findCategory(@Param String category);
 }

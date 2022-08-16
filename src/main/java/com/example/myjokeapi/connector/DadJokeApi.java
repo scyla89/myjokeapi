@@ -1,7 +1,7 @@
 package com.example.myjokeapi.connector;
 
-import com.example.myjokeapi.config.EmptyListException;
-import com.example.myjokeapi.config.JokeNotFoundException;
+import com.example.myjokeapi.exception.EmptyListException;
+import com.example.myjokeapi.exception.JokeNotFoundException;
 import com.example.myjokeapi.connector.model.DadJoke;
 import com.example.myjokeapi.connector.model.DadJokeList;
 import org.springframework.cloud.openfeign.FeignClient;

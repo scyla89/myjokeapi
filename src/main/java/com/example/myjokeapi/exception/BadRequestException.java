@@ -1,4 +1,4 @@
-package com.example.myjokeapi.config;
+package com.example.myjokeapi.exception;
 
 public class BadRequestException extends RuntimeException {
 

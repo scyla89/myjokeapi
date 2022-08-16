@@ -1,4 +1,4 @@
-package com.example.myjokeapi.service.model;
+package com.example.myjokeapi.database.model;
 
 import com.example.myjokeapi.connector.model.DadJoke;
 import javax.persistence.*;
@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="jokes")
-public class Joke {
+public class JokeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
@@ -18,16 +18,16 @@ public class Joke {
     @NotNull(message= "Please choose a category as well!")
     private String category;
 
-    public Joke() {}
+    public JokeEntity() {}
 
-    public Joke(String externalId, String joke, String category) {
+    public JokeEntity(String externalId, String joke, String category) {
         this.externalId = externalId;
         this.joke = joke;
         this.category = category;
     }
 
     // DTO to Entity
-    public Joke(DadJoke dadJoke) {
+    public JokeEntity(DadJoke dadJoke) {
         this.externalId = dadJoke.getId();
         this.joke = dadJoke.getJoke();
         this.category = "dadjoke";

@@ -1,5 +1,8 @@
 package com.example.myjokeapi.config;
 
+import com.example.myjokeapi.exception.BadRequestException;
+import com.example.myjokeapi.exception.EmptyListException;
+import com.example.myjokeapi.exception.JokeNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,7 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @ControllerAdvice
-public class JokeExceptionHandler extends ResponseEntityExceptionHandler {
+public class ExceptionHandlerConfig extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(JokeNotFoundException.class)
     public ResponseEntity<Object> handleJokeNotFoundException(JokeNotFoundException ex, WebRequest request) {

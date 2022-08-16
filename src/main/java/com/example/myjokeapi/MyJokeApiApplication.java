@@ -2,7 +2,7 @@ package com.example.myjokeapi;
 
 import com.example.myjokeapi.config.MyJokeInterceptor;
 import com.example.myjokeapi.controller.MyJokeController;
-import com.example.myjokeapi.service.model.Joke;
+import com.example.myjokeapi.database.model.JokeEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +35,12 @@ public class MyJokeApiApplication extends SpringBootServletInitializer implement
 		log.info("Random Joke: " + myJokeController.getRandom().toString());
 		log.info("Random Joke: " + myJokeController.getRandom().toString());
 		// Add a new joke in a different category
-		log.info("Added Joke: " + myJokeController.addJoke(new Joke("none", "A conference call is the best way for a dozen people to say “bye” 300 times.", "officejoke")).getBody());
+		log.info("Added Joke: " + myJokeController.addJoke(new JokeEntity("none", "A conference call is the best way for a dozen people to say “bye” 300 times.", "officejoke")).getBody());
 		// Check DB entries
 		log.info(">>> All Jokes in DB");
-		List<Joke> allJokes = myJokeController.allJokes();
-		allJokes.forEach ( joke -> {
-			log.info("Joke -> " + joke);
+		List<JokeEntity> allJokes = myJokeController.allJokes();
+		allJokes.forEach (jokeEntity -> {
+			log.info("Joke -> " + jokeEntity);
 		});
 	}
 }

@@ -2,7 +2,8 @@ package com.example.myjokeapi.service;
 
 import com.example.myjokeapi.connector.DadJokeService;
 import com.example.myjokeapi.controller.model.JokeDto;
-import com.example.myjokeapi.service.model.Joke;
+import com.example.myjokeapi.database.repository.MyJokeRepository;
+import com.example.myjokeapi.database.model.JokeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
 @Service
 public class MyJokeService {
     @Autowired
-    DadJokeService dadJokesService;
+    DadJokeService dadJokeService;
     @Autowired
     MyJokeRepository myJokeRepository;
 
@@ -19,20 +20,20 @@ public class MyJokeService {
      * Dad Jokes
      */
     public JokeDto getRandom() {
-        var dadJoke = dadJokesService.getRandom();
-        Joke joke = new Joke(dadJoke);
+        var dadJoke = dadJokeService.getRandom();
         // Save the random joke in the DB
-        myJokeRepository.save(joke);
+        JokeEntity jokeEntity = new JokeEntity(dadJoke);
+        myJokeRepository.save(jokeEntity);
         return dadJoke.toDto();
     }
 
     public JokeDto findById(String id) {
-        var dadJoke = dadJokesService.findById(id);
+        var dadJoke = dadJokeService.findById(id);
         return dadJoke.toDto();
     }
 
     public List<JokeDto> findByTerm(String term) {
-        var dadJokeList = dadJokesService.findByTerm(term);
+        var dadJokeList = dadJokeService.findByTerm(term);
         List<JokeDto> jokeDtoList = new ArrayList<>();
         dadJokeList.results.forEach ( dadJoke -> {
             jokeDtoList.add(dadJoke.toDto());
@@ -43,16 +44,16 @@ public class MyJokeService {
     /**
      * DB queries
      */
-    public List<Joke> findAll() {
+    public List<JokeEntity> findAll() {
         return myJokeRepository.findAll();
     }
 
-    public Joke addJoke(Joke joke) {
-        myJokeRepository.save(joke);
-        return joke;
+    public JokeEntity addJoke(JokeEntity jokeEntity) {
+        myJokeRepository.save(jokeEntity);
+        return jokeEntity;
     }
 
-    public List<Joke> findCategory(String category) {
+    public List<JokeEntity> findCategory(String category) {
         return myJokeRepository.findCategory(category);
     }
 }

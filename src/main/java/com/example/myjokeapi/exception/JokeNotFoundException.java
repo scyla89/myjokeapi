@@ -1,4 +1,4 @@
-package com.example.myjokeapi.config;
+package com.example.myjokeapi.exception;
 
 public class JokeNotFoundException extends RuntimeException {
 

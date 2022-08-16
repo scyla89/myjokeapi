@@ -1,7 +1,7 @@
 package com.example.myjokeapi.connector;
 
-import com.example.myjokeapi.config.EmptyListException;
-import com.example.myjokeapi.config.JokeNotFoundException;
+import com.example.myjokeapi.exception.EmptyListException;
+import com.example.myjokeapi.exception.JokeNotFoundException;
 import com.example.myjokeapi.connector.model.DadJoke;
 import com.example.myjokeapi.connector.model.DadJokeList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +10,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class DadJokeService {
     @Autowired
-    private DadJokeApi dadJokesApi;
+    private DadJokeApi dadJokeApi;
 
     public DadJoke getRandom() {
-        DadJoke dadJoke = dadJokesApi.getRandom();
+        DadJoke dadJoke = dadJokeApi.getRandom();
         return dadJoke;
     }
 
     public DadJoke findById(String id) {
-        DadJoke dadJoke = dadJokesApi.findById(id);
+        DadJoke dadJoke = dadJokeApi.findById(id);
         if (dadJoke.getStatus() == 200) {
             return dadJoke;
         } else if (dadJoke.getStatus() == 404){
@@ -28,7 +28,7 @@ public class DadJokeService {
     }
 
     public DadJokeList findByTerm(String term) {
-        DadJokeList dadJokeList = dadJokesApi.findByTerm(term, 3);
+        DadJokeList dadJokeList = dadJokeApi.findByTerm(term, 3);
         if (dadJokeList.results.isEmpty()) {
             throw new EmptyListException(term);
         }
