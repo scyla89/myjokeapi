@@ -51,4 +51,8 @@ public class MyJokeService {
         myJokeRepository.save(joke);
         return joke;
     }
+
+    public List<Joke> findCategory(String category) {
+        return myJokeRepository.findCategory(category);
+    }
 }

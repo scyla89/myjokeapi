@@ -15,24 +15,24 @@ import java.rmi.ServerException;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/jokes", method = RequestMethod.GET)
+@RequestMapping(value = "/jokes")
 public class MyJokeController {
     private static Logger log = LoggerFactory.getLogger(MyJokeController.class);
 
     @Autowired
     MyJokeService myJokeService;
 
-    @RequestMapping("/random")
+    @GetMapping("/random")
     public JokeDto getRandom() {
         return myJokeService.getRandom();
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public JokeDto findById(@PathVariable String id) {
         return myJokeService.findById(id);
     }
 
-    @RequestMapping("/byTerm")
+    @GetMapping("/byTerm")
     public List<JokeDto> findByTerm(String term) {
         return myJokeService.findByTerm(term);
     }
@@ -51,5 +51,10 @@ public class MyJokeController {
         } else {
             return new ResponseEntity<>(joke, HttpStatus.CREATED);
         }
+    }
+
+    @GetMapping("/category")
+    public List<Joke> findCategory(String category) {
+        return myJokeService.findCategory(category);
     }
 }

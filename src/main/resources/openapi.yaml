@@ -1,9 +1,10 @@
 openapi: 3.0.0
 info:
   title: My Joke API
-  description: |
+  description: >-
     This is a sample `Joke` server, where you can get random jokes, or search jokes by ID or term.
-    It only contains dad jokes for now, that are coming from a public API.
+    <br>The main endpoints contain only dad jokes for now. They come directly from an Open API and converted to JokeDto objects.
+    <br>If random jokes are searched, they are saved in the local database.
     
     Support:
   contact:
@@ -11,7 +12,7 @@ info:
     email: cs.doe@example.com
   version: 1.0.0-oas3
 servers:
-  - url: http://localhost:8080/dadjokes
+  - url: http://localhost:8080/jokes
     description: Local server
 security: [] #No security
 tags:
@@ -19,6 +20,7 @@ tags:
     externalDocs:
       description: Originally from icanhazdadjoke API
       url: https://icanhazdadjoke.com/
+  - name: dbOperations
 paths:
   /random:
     get:
@@ -79,6 +81,55 @@ paths:
                   $ref: '#/components/schemas/JokeDto'
         '400':
           description: Invalid status value
+  /add:
+    post:
+      tags:
+        - dbOperations
+      summary: Adds a new joke to the local database
+      operationId: addJoke
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Joke'
+      responses:
+        '201':
+          description: Created
+  /all:
+    get:
+      tags:
+        - dbOperations
+      summary: Lists all Jokes saved in the local database
+      operationId: allJokes
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Joke'
+        '400':
+          description: Invalid status value
+  /category:
+    get:
+      tags:
+        - dbOperations
+      summary: Lists all Jokes from the Db with the given category
+      operationId: findCategory
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Joke'
+        '400':
+          description: Invalid status value
 components:
   schemas:
     JokeDto:
@@ -87,6 +138,23 @@ components:
         joke:
           type: string
           example: When my wife told me to stop impersonating a flamingo, I had to put my foot down.
+    Joke:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: "auto-generated ID"
+          example: 1
+        externalId:
+          type: string
+          example: iGQZDAIRZDd
+        joke:
+          type: string
+          example: Why did the burglar hang his mugshot on the wall? To prove that he was framed!
+        category:
+          type: string
+          example: dadjokes / officejokes / ...
   securitySchemes:
     api_key:
       type: apiKey

@@ -13,7 +13,6 @@ public interface MyJokeRepository extends CrudRepository<Joke, String> {
     @Override
     List<Joke> findAll();
 
-    //TODO: Create a custom query
-    //@Query(value = "SELECT * FROM jokes WHERE category = (:category)", nativeQuery = true)
-    //List<Joke> selectCategory(@Param String category);
+    @Query(value = "SELECT * FROM jokes WHERE category = (:category)", nativeQuery = true)
+    List<Joke> findCategory(@Param String category);
 }
