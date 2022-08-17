@@ -1,5 +1,6 @@
 package com.example.myjokeapi.config;
 
+import com.example.myjokeapi.interceptor.MyJokeInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

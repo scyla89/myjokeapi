@@ -1,11 +1,9 @@
 package com.example.myjokeapi;
 
-import com.example.myjokeapi.config.MyJokeInterceptor;
 import com.example.myjokeapi.controller.MyJokeController;
 import com.example.myjokeapi.database.model.JokeEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,13 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
+@RequiredArgsConstructor
 @SpringBootApplication
 @EnableFeignClients
 public class MyJokeApiApplication extends SpringBootServletInitializer implements CommandLineRunner {
-	private static Logger log = LoggerFactory.getLogger(MyJokeInterceptor.class);
-
-	@Autowired
-	private MyJokeController myJokeController;
+	private final MyJokeController myJokeController;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MyJokeApiApplication.class, args);

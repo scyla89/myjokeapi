@@ -4,17 +4,17 @@ import com.example.myjokeapi.connector.DadJokeService;
 import com.example.myjokeapi.controller.model.JokeDto;
 import com.example.myjokeapi.database.repository.MyJokeRepository;
 import com.example.myjokeapi.database.model.JokeEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class MyJokeService {
-    @Autowired
-    DadJokeService dadJokeService;
-    @Autowired
-    MyJokeRepository myJokeRepository;
+    private final DadJokeService dadJokeService;
+    private final MyJokeRepository myJokeRepository;
 
     /**
      * Dad Jokes
@@ -35,7 +35,7 @@ public class MyJokeService {
     public List<JokeDto> findByTerm(String term) {
         var dadJokeList = dadJokeService.findByTerm(term);
         List<JokeDto> jokeDtoList = new ArrayList<>();
-        dadJokeList.results.forEach ( dadJoke -> {
+        dadJokeList.results().forEach ( dadJoke -> {
             jokeDtoList.add(dadJoke.toDto());
         });
         return jokeDtoList;

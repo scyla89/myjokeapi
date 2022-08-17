@@ -28,8 +28,8 @@ public class JokeEntity {
 
     // DTO to Entity
     public JokeEntity(DadJoke dadJoke) {
-        this.externalId = dadJoke.getId();
-        this.joke = dadJoke.getJoke();
+        this.externalId = dadJoke.id();
+        this.joke = dadJoke.joke();
         this.category = "dadjoke";
     }
 

@@ -4,13 +4,14 @@ import com.example.myjokeapi.exception.EmptyListException;
 import com.example.myjokeapi.exception.JokeNotFoundException;
 import com.example.myjokeapi.connector.model.DadJoke;
 import com.example.myjokeapi.connector.model.DadJokeList;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class DadJokeService {
-    @Autowired
-    private DadJokeApi dadJokeApi;
+    private final DadJokeApi dadJokeApi;
 
     public DadJoke getRandom() {
         DadJoke dadJoke = dadJokeApi.getRandom();
@@ -19,9 +20,9 @@ public class DadJokeService {
 
     public DadJoke findById(String id) {
         DadJoke dadJoke = dadJokeApi.findById(id);
-        if (dadJoke.getStatus() == 200) {
+        if (dadJoke.status() == 200) {
             return dadJoke;
-        } else if (dadJoke.getStatus() == 404){
+        } else if (dadJoke.status() == 404){
             throw new JokeNotFoundException(id);
         }
         return dadJoke;
@@ -29,7 +30,7 @@ public class DadJokeService {
 
     public DadJokeList findByTerm(String term) {
         DadJokeList dadJokeList = dadJokeApi.findByTerm(term, 3);
-        if (dadJokeList.results.isEmpty()) {
+        if (dadJokeList.results().isEmpty()) {
             throw new EmptyListException(term);
         }
         return dadJokeList;

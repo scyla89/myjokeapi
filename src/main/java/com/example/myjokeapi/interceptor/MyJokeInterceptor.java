@@ -1,4 +1,4 @@
-package com.example.myjokeapi.config;
+package com.example.myjokeapi.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ public class MyJokeInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("PreHandle method is calling.");
+        log.info("[preHandle][" + request.getMethod() + "]" + request.getRequestURI());
         //TODO: authentication validation -> the whole process
         if (request.getHeader("Authorization") == null) {
             log.info("Authorization not sent.");

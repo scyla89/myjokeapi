@@ -4,6 +4,8 @@ import com.example.myjokeapi.exception.BadRequestException;
 import com.example.myjokeapi.controller.model.JokeDto;
 import com.example.myjokeapi.service.MyJokeService;
 import com.example.myjokeapi.database.model.JokeEntity;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +14,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import com.example.myjokeapi.interceptor.MyJokeInterceptor;
 
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/jokes")
 public class MyJokeController {
-    private static Logger log = LoggerFactory.getLogger(MyJokeController.class);
+    private final MyJokeService myJokeService;
 
-    @Autowired
-    MyJokeService myJokeService;
+    //TODO: Change everything to ResponseEntity?
 
     @GetMapping("/random")
     public JokeDto getRandom() {
