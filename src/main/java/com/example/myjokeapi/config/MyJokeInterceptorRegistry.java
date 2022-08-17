@@ -1,14 +1,14 @@
 package com.example.myjokeapi.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@RequiredArgsConstructor
 @Component
 public class MyJokeInterceptorRegistry implements WebMvcConfigurer {
-    @Autowired
-    MyJokeInterceptor myJokeInterceptor;
+    private final MyJokeInterceptor myJokeInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
