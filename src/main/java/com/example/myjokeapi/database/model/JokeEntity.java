@@ -8,10 +8,10 @@ import javax.validation.constraints.NotNull;
 @Table(name="jokes")
 public class JokeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
-    private String externalId;
+    private String externalid;
     @Column
     private String joke;
     @Column
@@ -20,30 +20,30 @@ public class JokeEntity {
 
     public JokeEntity() {}
 
-    public JokeEntity(String externalId, String joke, String category) {
-        this.externalId = externalId;
+    public JokeEntity(String externalid, String joke, String category) {
+        this.externalid = externalid;
         this.joke = joke;
         this.category = category;
     }
 
     // DTO to Entity
     public JokeEntity(DadJoke dadJoke) {
-        this.externalId = dadJoke.id();
+        this.externalid = dadJoke.id();
         this.joke = dadJoke.joke();
         this.category = "dadjoke";
     }
 
     @Override
     public String toString() {
-        return String.format("ID=%s, External ID=%s, Joke=%s, Category=%s", id, externalId, joke, category);
+        return String.format("ID=%s, External ID=%s, Joke=%s, Category=%s", id, externalid, joke, category);
     }
 
     public long getId() {
         return id;
     }
 
-    public String getExternalId() {
-        return externalId;
+    public String getExternalid() {
+        return externalid;
     }
 
     public String getJoke() {
@@ -58,8 +58,8 @@ public class JokeEntity {
         this.id = id;
     }
 
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
+    public void setExternalid(String externalId) {
+        this.externalid = externalId;
     }
 
     public void setJoke(String joke) {

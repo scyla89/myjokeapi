@@ -4,7 +4,7 @@ info:
   description: >-
     This is a sample `Joke` server, where you can get random jokes, or search jokes by ID or term.
     <br>The main endpoints contain only dad jokes for now. They come directly from an Open API and converted to JokeDto objects.
-    <br>If random jokes are searched, they are saved in the local database.
+    <br>If random jokes are searched, they are saved in the local in-memory database.
     
     Support:
   contact:
@@ -110,7 +110,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Joke'
+                  $ref: '#/components/schemas/JokeEntity'
         '400':
           description: Invalid status value
   /category:
@@ -127,7 +127,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Joke'
+                  $ref: '#/components/schemas/JokeEntity'
         '400':
           description: Invalid status value
 components:
@@ -138,7 +138,7 @@ components:
         joke:
           type: string
           example: When my wife told me to stop impersonating a flamingo, I had to put my foot down.
-    Joke:
+    JokeEntity:
       type: object
       properties:
         id:

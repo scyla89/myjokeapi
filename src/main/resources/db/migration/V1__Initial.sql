@@ -1,0 +1,2 @@
+CREATE TABLE JOKES (ID INT AUTO_INCREMENT PRIMARY KEY, EXTERNALID VARCHAR(45), JOKE VARCHAR(1000) NOT NULL, CATEGORY VARCHAR(45) NOT NULL);
+INSERT INTO JOKES (EXTERNALID, JOKE, CATEGORY) VALUES ('none', 'I think they picked me for my motivational skills. Everyone always says they have to work twice as hard when I’m around!', 'officejoke');
