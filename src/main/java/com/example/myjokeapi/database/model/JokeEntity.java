@@ -1,6 +1,8 @@
 package com.example.myjokeapi.database.model;
 
 import com.example.myjokeapi.connector.model.DadJoke;
+import com.example.myjokeapi.controller.model.JokeDto;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -15,7 +17,6 @@ public class JokeEntity {
     @Column
     private String joke;
     @Column
-    @NotNull(message= "Please choose a category as well!")
     private String category;
 
     public JokeEntity() {}
@@ -31,6 +32,11 @@ public class JokeEntity {
         this.externalid = dadJoke.id();
         this.joke = dadJoke.joke();
         this.category = "dadjoke";
+    }
+
+    //Entity to DTO
+    public JokeDto toDto() {
+        return new JokeDto(joke);
     }
 
     @Override

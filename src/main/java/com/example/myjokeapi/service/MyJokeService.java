@@ -44,8 +44,13 @@ public class MyJokeService {
     /**
      * DB queries
      */
-    public List<JokeEntity> findAll() {
-        return myJokeRepository.findAll();
+    public List<JokeDto> findAll() {
+        var jokeEntityList = myJokeRepository.findAll();
+        List<JokeDto> jokeDtoList = new ArrayList<>();
+        jokeEntityList.forEach ( jokeEntity -> {
+            jokeDtoList.add(jokeEntity.toDto());
+        });
+        return jokeDtoList;
     }
 
     public JokeEntity addJoke(JokeEntity jokeEntity) {
@@ -53,7 +58,13 @@ public class MyJokeService {
         return jokeEntity;
     }
 
-    public List<JokeEntity> findCategory(String category) {
-        return myJokeRepository.findCategory(category);
+    public List<JokeDto> findCategory(String category) {
+        var jokeEntityList = myJokeRepository.findCategory(category);
+        List<JokeDto> jokeDtoList = new ArrayList<>();
+        jokeEntityList.forEach ( joke -> {
+            jokeDtoList.add(joke.toDto());
+        });
+        return jokeDtoList;
     }
+
 }
