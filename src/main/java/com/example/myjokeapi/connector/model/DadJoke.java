@@ -1,16 +1,16 @@
 package com.example.myjokeapi.connector.model;
 
-import com.example.myjokeapi.controller.model.JokeDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-public record DadJoke(
-        String id,
-        String joke,
-        int status)
-{
-    // Entity to DTO converter
-    public JokeDto toDto() {
-        return new JokeDto(joke);
-    }
+@Getter
+@Setter
+@AllArgsConstructor
+public class DadJoke {
+    private String id;
+    private String joke;
+    private int status;
 
     @Override
     public String toString() {

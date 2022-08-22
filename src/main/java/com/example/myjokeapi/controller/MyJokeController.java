@@ -2,7 +2,6 @@ package com.example.myjokeapi.controller;
 
 import com.example.myjokeapi.controller.model.JokeDto;
 import com.example.myjokeapi.service.MyJokeService;
-import com.example.myjokeapi.database.model.JokeEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,8 +38,8 @@ public class MyJokeController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<JokeEntity> addJoke(@RequestBody JokeEntity newJoke) {
-        JokeEntity jokeEntity = myJokeService.addJoke(newJoke);
-        return new ResponseEntity<>(jokeEntity, HttpStatus.CREATED);
+    public ResponseEntity<JokeDto> addJoke(@RequestBody JokeDto newJokeDto) {
+        JokeDto jokeDto = myJokeService.addJoke(newJokeDto);
+        return new ResponseEntity<>(jokeDto, HttpStatus.CREATED);
     }
 }
