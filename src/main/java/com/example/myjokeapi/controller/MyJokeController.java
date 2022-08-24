@@ -16,21 +16,25 @@ import java.util.Optional;
 public class MyJokeController {
     private final MyJokeService myJokeService;
 
+    @GetMapping("/random")
+    public JokeDto getRandom() {
+        return myJokeService.getRandom();
+    }
+
+    @GetMapping("/{id}")
+    public JokeDto findById(@PathVariable String id) {
+        return myJokeService.findById(id);
+    }
+
     @GetMapping("/")
-    public List<JokeDto> getJoke(
-            @RequestParam("id") Optional<String> id,
-            @RequestParam("term") Optional<String> term,
-            @RequestParam("category") Optional<String> category,
-            @RequestParam(value="random", defaultValue="false") Optional<Boolean> random) {
+    public List<JokeDto> searchFor(
+        @RequestParam("term") Optional<String> term,
+        @RequestParam("category") Optional<String> category) {
         List<JokeDto> jokeDtoList = new ArrayList<>();
-        if (id.isPresent()) {
-            jokeDtoList.add(myJokeService.findById(id.get()));
-        } else if (term.isPresent()) {
+        if (term.isPresent()) {
             jokeDtoList.addAll(myJokeService.findByTerm(term.get()));
         } else if (category.isPresent()){
             jokeDtoList.addAll(myJokeService.findCategory(category.get()));
-        } else if (random.isPresent() && random.get()){
-            jokeDtoList.add(myJokeService.getRandom());
         } else {
             jokeDtoList.addAll(myJokeService.findAll());
         }
