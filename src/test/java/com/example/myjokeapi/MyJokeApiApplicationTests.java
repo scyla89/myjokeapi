@@ -12,7 +12,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +27,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @ContextConfiguration(classes = IntegrationTestConfiguration.class)
-public class MyJokeApiApplicationTest {
-	private static final Logger LOG = LoggerFactory.getLogger(MyJokeApiApplicationTest.class);
+public class MyJokeApiApplicationTests {
+	private static final Logger LOG = LoggerFactory.getLogger(MyJokeApiApplicationTests.class);
 
 	@Autowired
 	private MockMvc mockMvc;
