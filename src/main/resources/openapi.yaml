@@ -58,18 +58,26 @@ paths:
                 $ref: '#/components/schemas/JokeDto'
         '400':
           description: Invalid status value
-  /byTerm:
+  /:
     get:
       tags:
         - dadjokes
-      summary: Searches a joke by term
-      operationId: findByTerm
+        - dbOperations
+      summary: Searches jokes by term, by category, or if none of them is given then returns all jokes in DB
+      operationId: searchFor
       parameters:
         - in: query
           name: term
-          required: true
+          required: false
           schema:
             type: string
+          description: It searches on the dadjokes server
+        - in: query
+          name: category
+          required: false
+          schema:
+            type: string
+          description: It searches in the local database
       responses:
         '200':
           description: Successful operation
@@ -81,7 +89,6 @@ paths:
                   $ref: '#/components/schemas/JokeDto'
         '400':
           description: Invalid status value
-  /add:
     post:
       tags:
         - dbOperations
@@ -92,44 +99,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Joke'
+              $ref: '#/components/schemas/JokeDto'
       responses:
         '201':
           description: Created
-  /all:
-    get:
-      tags:
-        - dbOperations
-      summary: Lists all Jokes saved in the local database
-      operationId: allJokes
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JokeEntity'
-        '400':
-          description: Invalid status value
-  /category:
-    get:
-      tags:
-        - dbOperations
-      summary: Lists all Jokes from the Db with the given category
-      operationId: findCategory
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JokeEntity'
-        '400':
-          description: Invalid status value
 components:
   schemas:
     JokeDto:
@@ -138,23 +111,9 @@ components:
         joke:
           type: string
           example: When my wife told me to stop impersonating a flamingo, I had to put my foot down.
-    JokeEntity:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: "auto-generated ID"
-          example: 1
-        externalId:
-          type: string
-          example: iGQZDAIRZDd
-        joke:
-          type: string
-          example: Why did the burglar hang his mugshot on the wall? To prove that he was framed!
         category:
           type: string
-          example: dadjokes / officejokes / ...
+          example: dadjoke / officejoke / ...
   securitySchemes:
     api_key:
       type: apiKey

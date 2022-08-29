@@ -13,89 +13,90 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class MyJokeService {
-    private final DadJokeService dadJokeService;
-    private final MyJokeRepository myJokeRepository;
 
-    /**
-     * Dad Jokes
-     */
-    public JokeDto getRandom() {
-        var dadJoke = dadJokeService.getRandom();
-        // Save the random joke in the DB
-        myJokeRepository.save(mapToJokeEntity(dadJoke));
-        return mapToJokeDto(dadJoke);
-    }
+  private final DadJokeService dadJokeService;
+  private final MyJokeRepository myJokeRepository;
 
-    public JokeDto findById(String id) {
-        var dadJoke = dadJokeService.findById(id);
-        return mapToJokeDto(dadJoke);
-    }
+  /**
+   * Dad Jokes
+   */
+  public JokeDto getRandom() {
+    var dadJoke = dadJokeService.getRandom();
+    // Save the random joke in the DB
+    myJokeRepository.save(mapToJokeEntity(dadJoke));
+    return mapToJokeDto(dadJoke);
+  }
 
-    public List<JokeDto> findByTerm(String term) {
-        var dadJokeList = dadJokeService.findByTerm(term);
-        List<JokeDto> jokeDtoList = new ArrayList<>();
-        dadJokeList.results().forEach ( dadJoke -> {
-            jokeDtoList.add(mapToJokeDto(dadJoke));
-        });
-        return jokeDtoList;
-    }
+  public JokeDto findById(String id) {
+    var dadJoke = dadJokeService.findById(id);
+    return mapToJokeDto(dadJoke);
+  }
 
-    /**
-     * DB queries
-     */
-    public List<JokeDto> findAll() {
-        var jokeEntityList = myJokeRepository.findAll();
-        List<JokeDto> jokeDtoList = new ArrayList<>();
-        jokeEntityList.forEach ( jokeEntity -> {
-            jokeDtoList.add(mapToJokeDto(jokeEntity));
-        });
-        return jokeDtoList;
-    }
+  public List<JokeDto> findByTerm(String term) {
+    var dadJokeList = dadJokeService.findByTerm(term);
+    List<JokeDto> jokeDtoList = new ArrayList<>();
+    dadJokeList.results().forEach(dadJoke -> {
+      jokeDtoList.add(mapToJokeDto(dadJoke));
+    });
+    return jokeDtoList;
+  }
 
-    public JokeDto addJoke(JokeDto jokeDto) {
-        myJokeRepository.save(mapToJokeEntity(jokeDto));
-        return jokeDto;
-    }
+  /**
+   * DB queries
+   */
+  public List<JokeDto> findAll() {
+    var jokeEntityList = myJokeRepository.findAll();
+    List<JokeDto> jokeDtoList = new ArrayList<>();
+    jokeEntityList.forEach(jokeEntity -> {
+      jokeDtoList.add(mapToJokeDto(jokeEntity));
+    });
+    return jokeDtoList;
+  }
 
-    public List<JokeDto> findCategory(String category) {
-        var jokeEntityList = myJokeRepository.findCategory(category);
-        List<JokeDto> jokeDtoList = new ArrayList<>();
-        jokeEntityList.forEach ( jokeEntity -> {
-            jokeDtoList.add(mapToJokeDto(jokeEntity));
-        });
-        return jokeDtoList;
-    }
+  public JokeDto addJoke(JokeDto jokeDto) {
+    myJokeRepository.save(mapToJokeEntity(jokeDto));
+    return jokeDto;
+  }
 
-    /**
-     * Mappers
-     */
-    private JokeDto mapToJokeDto(DadJoke dadJoke) {
-        JokeDto jokeDto = new JokeDto();
-        jokeDto.setJoke(dadJoke.getJoke());
-        jokeDto.setCategory("dadjoke");
-        return jokeDto;
-    }
+  public List<JokeDto> findCategory(String category) {
+    var jokeEntityList = myJokeRepository.findCategory(category);
+    List<JokeDto> jokeDtoList = new ArrayList<>();
+    jokeEntityList.forEach(jokeEntity -> {
+      jokeDtoList.add(mapToJokeDto(jokeEntity));
+    });
+    return jokeDtoList;
+  }
 
-    private JokeDto mapToJokeDto(JokeEntity jokeEntity) {
-        JokeDto jokeDto = new JokeDto();
-        jokeDto.setJoke(jokeEntity.getJoke());
-        jokeDto.setCategory(jokeEntity.getCategory());
-        return jokeDto;
-    }
+  /**
+   * Mappers
+   */
+  private JokeDto mapToJokeDto(DadJoke dadJoke) {
+    JokeDto jokeDto = new JokeDto();
+    jokeDto.setJoke(dadJoke.getJoke());
+    jokeDto.setCategory("dadjoke");
+    return jokeDto;
+  }
 
-    private JokeEntity mapToJokeEntity(DadJoke dadJoke) {
-        JokeEntity joke = new JokeEntity();
-        joke.setExternalid(dadJoke.getId());
-        joke.setJoke(dadJoke.getJoke());
-        joke.setCategory("dadjoke");
-        return joke;
-    }
+  private JokeDto mapToJokeDto(JokeEntity jokeEntity) {
+    JokeDto jokeDto = new JokeDto();
+    jokeDto.setJoke(jokeEntity.getJoke());
+    jokeDto.setCategory(jokeEntity.getCategory());
+    return jokeDto;
+  }
 
-    private JokeEntity mapToJokeEntity(JokeDto jokeDto) {
-        JokeEntity jokeEntity = new JokeEntity();
-        jokeEntity.setExternalid("none");
-        jokeEntity.setJoke(jokeDto.getJoke());
-        jokeEntity.setCategory(jokeDto.getCategory());
-        return jokeEntity;
-    }
+  private JokeEntity mapToJokeEntity(DadJoke dadJoke) {
+    JokeEntity joke = new JokeEntity();
+    joke.setExternalid(dadJoke.getId());
+    joke.setJoke(dadJoke.getJoke());
+    joke.setCategory("dadjoke");
+    return joke;
+  }
+
+  private JokeEntity mapToJokeEntity(JokeDto jokeDto) {
+    JokeEntity jokeEntity = new JokeEntity();
+    jokeEntity.setExternalid("none");
+    jokeEntity.setJoke(jokeDto.getJoke());
+    jokeEntity.setCategory(jokeDto.getCategory());
+    return jokeEntity;
+  }
 }
